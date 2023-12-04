@@ -22,36 +22,38 @@ treb7uchet
     answer shouldBe expected
   }
 
-  val numbers = List( 
-      "1" -> 1,
-      "2" -> 2,
-      "3" -> 3,
-      "4" -> 4,
-      "5" -> 5,
-      "6" -> 6,
-      "7" -> 7,
-      "8" -> 8,
-      "9" -> 9,
-
-      "one" -> 1,
-      "two" -> 2,
-      "three" -> 3,
-      "four" -> 4,
-      "five" -> 5,
-      "six" -> 6,
-      "seven" -> 7,
-      "eight" -> 8,
-      "nine" -> 9,
+  val numbers = List(
+    "1" -> 1,
+    "2" -> 2,
+    "3" -> 3,
+    "4" -> 4,
+    "5" -> 5,
+    "6" -> 6,
+    "7" -> 7,
+    "8" -> 8,
+    "9" -> 9,
+  )
+  
+  val numbersAndWords = numbers ++ List( 
+    "one" -> 1,
+    "two" -> 2,
+    "three" -> 3,
+    "four" -> 4,
+    "five" -> 5,
+    "six" -> 6,
+    "seven" -> 7,
+    "eight" -> 8,
+    "nine" -> 9,
   )
 
   def lastNumber(line: String) : Int = {
     def reverNumbersToMatch(numbers: List[(String, Int)]) = numbers.map((text, x) => (text.reverse, x))
     
-    findNumber(line.reverse, reverNumbersToMatch(numbers))
+    findNumber(line.reverse, reverNumbersToMatch(numbersAndWords))
   }
 
   def firstNumber(line: String) : Int = {
-    findNumber(line, numbers)
+    findNumber(line, numbersAndWords)
   }
 
   def findNumber(line: String, numbers: List[(String, Int)]) : Int = {
