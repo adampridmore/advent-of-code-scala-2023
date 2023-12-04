@@ -118,11 +118,6 @@ treb7uchet
     "Part 2" should {
 
       "Part 2 parse line" should {
-        // var line1 = "two1nine"
-        // var line2 = "eightwothree"
-        // var line3 = "xtwone3four"
-        // var line4 = "treb7uchet"
-
         var line1 = "two1nine"
         var line2 = "eightwothree"
         var line3 = "abcone2threexyz"
@@ -169,24 +164,14 @@ treb7uchet
         }
 
         "temp 2" in {
-          // firstNumber("7pqrstsixteen") shouldBe 7
+          firstNumber("7pqrstsixteen") shouldBe 7
           lastNumber("7pqrstsixteen") shouldBe 6
         }
       }
 
       "puzzle" in {
-        assertAndPrint("Part 2 puzzle", solveA(puzzleText(), processLinePartB), 54338)
+        assertAndPrint("Part 2 puzzle", solveA(puzzleText(), processLinePartB), 53389)
       }
-
-      // "temp" in {
-      //   val lines = puzzleText().split(System.lineSeparator());
-
-      //   var lineValues = lines
-      //     .filter(!_.isBlank())
-      //     .map(line => (line, processLinePartB(line)))
-      //     // .mkString(System.lineSeparator())
-      //     .foreach(println(_))
-      // }
     }
   }
 }
