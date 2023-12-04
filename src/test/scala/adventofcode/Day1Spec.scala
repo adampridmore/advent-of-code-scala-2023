@@ -46,21 +46,21 @@ treb7uchet
     "nine" -> 9,
   )
 
-  def lastNumber(line: String) : Int = {
+  def lastNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
     def reverNumbersToMatch(numbers: List[(String, Int)]) = numbers.map((text, x) => (text.reverse, x))
     
-    findNumber(line.reverse, reverNumbersToMatch(numbersAndWords))
+    findNumber(line.reverse, reverNumbersToMatch(numbersToMatch))
   }
 
-  def firstNumber(line: String) : Int = {
-    findNumber(line, numbersAndWords)
+  def firstNumber(line: String,numbersToMatch: List[(String, Int)]) : Int = {
+    findNumber(line, numbersToMatch)
   }
 
-  def findNumber(line: String, numbers: List[(String, Int)]) : Int = {
-    var maybeFoundNumber = numbers.find((text, x) => line.startsWith(text))
+  def findNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
+    var maybeFoundNumber = numbersToMatch.find((text, x) => line.startsWith(text))
     maybeFoundNumber match {
       case Some(text, x) => x
-      case None => findNumber(line.substring(1), numbers)
+      case None => findNumber(line.substring(1), numbersToMatch)
     }
   }
 
@@ -73,7 +73,7 @@ treb7uchet
   }
 
   def processLinePartB(line: String) : Int = {
-    Integer.parseInt(firstNumber(line).toString() + lastNumber(line).toString())
+    Integer.parseInt(firstNumber(line, numbersAndWords).toString() + lastNumber(line, numbersAndWords).toString())
   }
 
   def solveA(textInput : String, lineProcessor: (String => Int)) : Int = {
@@ -129,8 +129,8 @@ treb7uchet
         var line7 = "7pqrstsixteen"
                
         line1 + " process to 29" in {
-          firstNumber(line1) shouldBe 2
-          lastNumber(line1) shouldBe 9
+          firstNumber(line1, numbersAndWords) shouldBe 2
+          lastNumber(line1, numbersAndWords) shouldBe 9
         }
 
         line2 + "process to 83" in {
@@ -138,8 +138,8 @@ treb7uchet
         }
 
         line3 + "process to 22" in {
-          firstNumber(line3) shouldBe 1
-          lastNumber(line3) shouldBe 3
+          firstNumber(line3, numbersAndWords) shouldBe 1
+          lastNumber(line3, numbersAndWords) shouldBe 3
 
           processLinePartB(line3) shouldBe 13
         }
@@ -161,13 +161,13 @@ treb7uchet
         }
 
         "temp 1" in {
-          firstNumber("pqr3stu8vwx") shouldBe 3
-          lastNumber("pqr3stu8vwx") shouldBe 8
+          firstNumber("pqr3stu8vwx", numbersAndWords) shouldBe 3
+          lastNumber("pqr3stu8vwx", numbersAndWords) shouldBe 8
         }
 
         "temp 2" in {
-          firstNumber("7pqrstsixteen") shouldBe 7
-          lastNumber("7pqrstsixteen") shouldBe 6
+          firstNumber("7pqrstsixteen", numbersAndWords) shouldBe 7
+          lastNumber("7pqrstsixteen", numbersAndWords) shouldBe 6
         }
       }
 
