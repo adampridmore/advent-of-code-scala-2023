@@ -22,19 +22,12 @@ treb7uchet
     answer shouldBe expected
   }
 
-  val numbers = List(
-    "1" -> 1,
-    "2" -> 2,
-    "3" -> 3,
-    "4" -> 4,
-    "5" -> 5,
-    "6" -> 6,
-    "7" -> 7,
-    "8" -> 8,
-    "9" -> 9,
-  )
+  var numbers : List[(String, Int)] = 
+    (1 to 10)
+      .map(x => (x.toString, x))
+      .toList
   
-  val numbersAndWords = numbers ++ List( 
+  val numbersAndWords = numbers ++ List(
     "one" -> 1,
     "two" -> 2,
     "three" -> 3,
@@ -46,44 +39,35 @@ treb7uchet
     "nine" -> 9,
   )
 
-  def lastNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
-    def reverNumbersToMatch(numbers: List[(String, Int)]) = numbers.map((text, x) => (text.reverse, x))
-    
-    findNumber(line.reverse, reverNumbersToMatch(numbersToMatch))
-  }
-
-  def firstNumber(line: String,numbersToMatch: List[(String, Int)]) : Int = {
-    findNumber(line, numbersToMatch)
-  }
-
-  def findNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
+  def firstNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
     var maybeFoundNumber = numbersToMatch.find((text, x) => line.startsWith(text))
     maybeFoundNumber match {
       case Some(text, x) => x
-      case None => findNumber(line.substring(1), numbersToMatch)
+      case None => firstNumber(line.substring(1), numbersToMatch)
     }
   }
 
-  def processLinePartA(line: String) : Int = {
-    var digitCharacters = 
-        line.toCharArray()
-        .filter(Character.isDigit(_))
-
-    Integer.parseInt(digitCharacters.head.toString() + digitCharacters.last.toString())
+  def lastNumber(line: String, numbersToMatch: List[(String, Int)]) : Int = {
+    def reverNumbersToMatch(numbers: List[(String, Int)]) = numbers.map((text, x) => (text.reverse, x))
+    
+    firstNumber(line.reverse, reverNumbersToMatch(numbersToMatch))
   }
 
-  def processLinePartB(line: String) : Int = {
-    Integer.parseInt(firstNumber(line, numbersAndWords).toString() + lastNumber(line, numbersAndWords).toString())
+  def processLine(numberToMatch: List[(String, Int)])(line: String) : Int = {
+    Integer.parseInt(firstNumber(line, numberToMatch).toString() + lastNumber(line, numberToMatch).toString())
   }
+
+  def processLinePartA : String => Int = processLine(numbers)
+  def processLinePartB : String => Int = processLine(numbersAndWords)
 
   def solveA(textInput : String, lineProcessor: (String => Int)) : Int = {
     val lines = textInput.split(System.lineSeparator());
 
     var lineValues = lines
       .filter(!_.isBlank())
-      .map(lineProcessor(_))
+      .map(lineProcessor(_));
 
-    lineValues.sum
+    lineValues.sum;
   }
   
   "Day 1" should {
