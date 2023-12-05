@@ -24,9 +24,9 @@ treb7uchet
     answer shouldBe expected
   }
   
-  "Day 1" should {
-    "Part 1" should {
-      "Example" in {
+  "A Day1 solver 1" can {
+    "solve part 1" should {
+      "solve to 142" in {
         val day1 = new adventofcode.day1.Day1(exampleText)
 
         assertAndPrint("Part 1 example", day1.solve(Day1.processLinePartA), 142)
@@ -34,21 +34,22 @@ treb7uchet
 
       "parse line" should {
         var line1 = "1abc2"
+        // var line1_ = ("1abc2", 12)
         var line2 = "pqr3stu8vwx"
         var line3 = "a1b2c3d4e5f"
         var line4 = "treb7uchet"
+
+        val lines = List(
+          ("1abc2", 12),
+          ("pqr3stu8vwx",38),
+          ("a1b2c3d4e5f", 15),
+          ("treb7uchet", 77)
+        )
         
-        line1 + " process to 12" in {
-          Day1.processLinePartA(line1) shouldBe 12
-        }
-        line2 + " process to 38" in {
-          Day1.processLinePartA(line2) shouldBe 38
-        }
-        line3 + " process to 15" in {
-          Day1.processLinePartA(line3) shouldBe 15
-        }
-        line4 + " process to 77" in {
-          Day1.processLinePartA(line4) shouldBe 77
+        "pass all lines" in {
+          lines.foreach(line => {
+            Day1.processLinePartA(line._1) shouldBe line._2
+          })
         }
       }
 
@@ -68,45 +69,32 @@ treb7uchet
         var line5 = "4nineeightseven2"
         var line6 = "zoneight234"
         var line7 = "7pqrstsixteen"
+
+        var lines = List(
+          ("two1nine", "29"),
+          ("eightwothree","83"),
+          ("abcone2threexyz","13"),
+          ("xtwone3four","24"),
+          ("4nineeightseven2","42"),
+          ("zoneight234","14"),
+          ("7pqrstsixteen","76")
+        )
+
+        "test lines" in{
+          lines.foreach(line => {
+            
+            Day1.firstNumber(line._1, Day1.numbersAndWords) shouldBe (Integer.parseInt(line._2.charAt(0).toString()))
+            Day1.lastNumber(line._1, Day1.numbersAndWords) shouldBe (Integer.parseInt(line._2.charAt(1).toString()))
+            Day1.processLinePartB(line._1) shouldBe (Integer.parseInt(line._2))
+          })
+        }
                
-        line1 + " process to 29" in {
-          Day1.firstNumber(line1, Day1.numbersAndWords) shouldBe 2
-          Day1.lastNumber(line1, Day1.numbersAndWords) shouldBe 9
-        }
-
-        line2 + "process to 83" in {
-          Day1.processLinePartB(line2) shouldBe 83
-        }
-
-        line3 + "process to 22" in {
-          Day1.firstNumber(line3, Day1.numbersAndWords) shouldBe 1
-          Day1.lastNumber(line3, Day1.numbersAndWords) shouldBe 3
-
-          Day1.processLinePartB(line3) shouldBe 13
-        }
-
-        line4 + "process to 24" in {
-          Day1.processLinePartB(line4) shouldBe 24
-        }
-
-        line5 + "process to 42" in {
-          Day1.processLinePartB(line5) shouldBe 42
-        }
-
-        line6 + "process to 14" in {
-          Day1.processLinePartB(line6) shouldBe 14
-        }
-
-        line7 + "process to 76" in {
-          Day1.processLinePartB(line7) shouldBe 76
-        }
-
-        "temp 1" in {
+        "bug 1" in {
           Day1.firstNumber("pqr3stu8vwx", Day1.numbersAndWords) shouldBe 3
           Day1.lastNumber("pqr3stu8vwx", Day1.numbersAndWords) shouldBe 8
         }
 
-        "temp 2" in {
+        "bug 2" in {
           Day1.firstNumber("7pqrstsixteen", Day1.numbersAndWords) shouldBe 7
           Day1.lastNumber("7pqrstsixteen", Day1.numbersAndWords) shouldBe 6
         }
